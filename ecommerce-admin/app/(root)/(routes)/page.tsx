@@ -1,5 +1,7 @@
 "use client"
 
+// 01:56:00 - 01:57:30 - ROUTING LOGIC EXPLANATION
+
 import { useEffect } from "react";
 
 import { useStoreModal } from "@/hooks/use-store-modal";
@@ -17,11 +19,7 @@ const SetupPage = () =>
     }
   }, [isOpen, onOpen])
 
-  return (
-    <div className="p-4">
-        Root Page
-    </div>
-  )
+  return null
 }
 
 export default SetupPage;
