@@ -1,6 +1,6 @@
 "use client"
 
-// LEFT AT 03:15:26
+// LEFT AT 03:25:20
 
 import * as z from "zod"
 import axios from "axios";
@@ -26,6 +26,7 @@ import
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
+import { ApiAlert } from "@/components/ui/api-alert";
 
 interface SettingsFormProps{
     initialData: Store;
@@ -67,12 +68,32 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
         }
     }
 
+    const onDelete =async () => 
+    {
+        try 
+        {
+            setLoading(true)
+            await axios.delete(`/api/stores/${params.storeId}`)
+            router.refresh()
+            router.push("/")
+            toast.success("Store deleted.")
+        } 
+        catch (error) 
+        {
+            toast.error("Make sure you removed all products and categories first.")
+        } finally 
+        {
+            setLoading(false)
+            setOpen(false)
+        }
+    }
+
     return(
         <>
         <AlertModal 
             isOpen={open}
             onClose={() => setOpen(false)}
-            onConfirm={() => {}}
+            onConfirm={onDelete}
             loading={loading}
         />
             <div className="flex items-center justify-between">
@@ -111,6 +132,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({
                         Save changes
                     </Button>
                 </form>
+                <Separator />
+                <ApiAlert title="test" description="test-description" />
             </Form>
         </>
     )
