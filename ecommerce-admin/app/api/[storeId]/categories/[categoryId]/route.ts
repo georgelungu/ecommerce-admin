@@ -3,8 +3,6 @@ import { NextResponse } from "next/server"
 
 import prismadb from "@/lib/prismadb";
 
-// LEFT AT 05:48:00
-
 export async function GET(
     req: Request,
     { params } : { params: { categoryId: string } }
@@ -19,6 +17,9 @@ export async function GET(
         const category = await prismadb.category.findUnique({
             where: {
                 id: params.categoryId,
+            },
+            include: {
+                billboard: true,
             }
         });
 
